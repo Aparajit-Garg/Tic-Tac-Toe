@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
+import "../styles/Card.css";
 
-
-const Card = () => {
+const Card = ({ handleClick, value }) => {
 
     return (
-        <div>
-
+        <div className='card' onClick={handleClick} style={{color: value == 'x' ? '#ffa02e' : '#62fffc'}}>
+            {value}
         </div>
     )
 }
