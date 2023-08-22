@@ -6,15 +6,29 @@ const Board = () => {
     const initialState = Array(9).fill(null)
     const [xTurn, setXTurn] = useState(true);
     const [turns, setTurns] = useState(initialState);
+    const [winner, setWinner] = useState(null)
+    const winningCombos = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+
+    useEffect(() => {checkWinner()}, [xTurn])
     
     const markCard = cardNo => {
-        if (turns[cardNo])
+        console.log(winner)
+        if (turns[cardNo] || winner)
             return;
         
         if (xTurn) {
             setTurns(prev => {
                 let newArr = prev
-                newArr[cardNo] = 'X'
+                newArr[cardNo] = 'x'
 
                 return newArr
             });
@@ -23,16 +37,26 @@ const Board = () => {
         else {
             setTurns(prev => {
                 let newArr = prev;
-                newArr[cardNo] = 'O'
+                newArr[cardNo] = 'o'
                 return newArr;
             });
             setXTurn(prev => !prev);
         }
     }
 
+    const checkWinner = () => {
+        for (const combo of winningCombos) {
+            const [a, b, c] = combo;
+            if (turns[a] && (turns[a] == turns[b]) && (turns[a] == turns[c])) {
+                setWinner(!xTurn ? 'x' : 'o')
+            }
+        }
+    }
+
     const resetGame = () => {
         setXTurn(true);
         setTurns(initialState);
+        setWinner(null)
     }
 
     return (
@@ -55,8 +79,9 @@ const Board = () => {
                 <Card handleClick={() => markCard(8)} value={turns[8]} />
             </div>
             <div className='player-turn'>
-                <span style={{backgroundColor: xTurn ? 'green' : ''}}> X </span>
-                <span style={{backgroundColor: !xTurn ? 'green' : ''}}> O </span>
+                <span> Turn : </span>
+                <span className={xTurn ? 'right' : ''} style={{color: xTurn ? (winner ? (winner === 'x' ? '#ffa02e' : '#62fffc') : '#ffa02e') : '#fff', display: xTurn ? 'flex' : 'none'}}> { !winner ? 'X' : winner.toUpperCase() + ' won.'} </span>
+                <span className={!xTurn ? 'left' : ''} style={{color: !xTurn ? (winner ? (winner === 'o' ? '#62fffc' : '#ffa02e') : '#62fffc') : 'fff', display: !xTurn ? 'flex' : 'none'}}> { !winner ? 'O' : winner.toUpperCase() + ' won'} </span>
             </div>
         </div>
     )
