@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import Card from './Card';
 import '../styles/Board.css'
+import Modal from './Modal';
 
 const Board = () => {
     const initialState = Array(9).fill(null)
     const [xTurn, setXTurn] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [turns, setTurns] = useState(initialState);
     const [winner, setWinner] = useState(null)
     const winningCombos = [
@@ -21,7 +23,6 @@ const Board = () => {
     useEffect(() => {checkWinner()}, [xTurn])
     
     const markCard = cardNo => {
-        console.log(winner)
         if (turns[cardNo] || winner)
             return;
         
@@ -48,7 +49,8 @@ const Board = () => {
         for (const combo of winningCombos) {
             const [a, b, c] = combo;
             if (turns[a] && (turns[a] == turns[b]) && (turns[a] == turns[c])) {
-                setWinner(!xTurn ? 'x' : 'o')
+                setWinner(!xTurn ? 'x' : 'o');
+                setIsModalOpen(true);
             }
         }
     }
@@ -83,6 +85,7 @@ const Board = () => {
                 <span className={xTurn ? 'right' : ''} style={{color: xTurn ? (winner ? (winner === 'x' ? '#ffa02e' : '#62fffc') : '#ffa02e') : '#fff', display: xTurn ? 'flex' : 'none'}}> { !winner ? 'X' : winner.toUpperCase() + ' won.'} </span>
                 <span className={!xTurn ? 'left' : ''} style={{color: !xTurn ? (winner ? (winner === 'o' ? '#62fffc' : '#ffa02e') : '#62fffc') : 'fff', display: !xTurn ? 'flex' : 'none'}}> { !winner ? 'O' : winner.toUpperCase() + ' won'} </span>
             </div>
+            { winner && <Modal winningPlayer={winner} modalOpen={isModalOpen} setModal={setIsModalOpen} gameReset={resetGame} />}
         </div>
     )
 }
