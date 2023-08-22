@@ -1,0 +1,27 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "Tic tac toe game with react",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aparajit-Garg/Tic-Tac-Toe.git"
+  },
+  "author": "Aparajit Garg",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aparajit-Garg/Tic-Tac-Toe/issues"
+  },
+  "homepage": "https://github.com/Aparajit-Garg/Tic-Tac-Toe#readme",
+  "devDependencies": {
+    "parcel": "^2.9.3"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
