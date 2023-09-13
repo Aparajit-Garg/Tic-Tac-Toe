@@ -4,6 +4,7 @@
   "description": "Tic tac toe game with react",
   "main": "index.js",
   "scripts": {
+    "build": "npx parcel build index.html",
     "start": "npx parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
